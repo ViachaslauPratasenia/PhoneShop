@@ -1,44 +1,57 @@
 package com.es.phoneshop.model.order;
 
-import com.es.phoneshop.model.Cart;
+import com.es.phoneshop.model.cart.Cart;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrderService {
-    private static final OrderService INSTANCE = new OrderServiceImpl();
-    private Map<String, Order> orderMap = new HashMap<>();
 
-    private OrderServiceImpl() {}
+    private List<Order> orders;
 
-    public static OrderService getInstance() { return INSTANCE; }
+    private OrderServiceImpl() {
+        orders = new ArrayList<>();
+    }
+    private static class OrderServiceHelper {
+        private static final OrderService INSTANCE = new OrderServiceImpl();
+    }
+    public static OrderService getInstance() {
+        return OrderServiceImpl.OrderServiceHelper.INSTANCE;
+    }
 
     @Override
-    public Order placeOrder(Cart cart) {
-        String id = generateId();
-        Order order = new Order(id);
+    public Order placeOrder(Cart cart, String name, String address, String phone, BigDecimal totalCost) {
+        Order order = new Order();
+        order.setName(name);
+        order.setAddress(address);
+        order.setPhone(phone);
+        order.setOrderId(generateOrderId());
+        order.setTotalCost(totalCost);
 
-        order.setOrderItems(cart.getCartItems()
-                .stream()
-                .map(cartItem -> new OrderItem(cartItem.getProduct(), cartItem.getQuantity()))
-                .collect(Collectors.toList()));
-
-        orderMap.put(id, order);
-
+        order.setCartItems(cart.getCartItems().stream().map(cartItem -> {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setProduct(cartItem.getProduct());
+            orderItem.setQuantity(cartItem.getQuantity());
+            return orderItem;
+        } ).collect(Collectors.toList()));
+        cart.clear();
+        orders.add(order);
         return order;
     }
 
     @Override
-    public Order getOrder(String id) {
-        return orderMap.get(id);
+    public Optional<Order> getOrder(String orderId) {
+        return this.orders.stream().filter(order -> order.getOrderId().equals(orderId)).findAny();
     }
 
-    private String generateId() {
-        String id = java.util.UUID.randomUUID().toString();
-        if(orderMap.get(id) == null) {
-            return id;
-        }
-        return generateId();
+    private String generateOrderId() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
+
+
 }

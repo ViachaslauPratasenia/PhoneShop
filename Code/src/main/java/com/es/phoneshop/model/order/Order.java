@@ -1,57 +1,48 @@
 package com.es.phoneshop.model.order;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
-public class Order extends AbstractOrder<OrderItem> implements Serializable {
-    private String id;
-    private String name;
-    private String address;
-    private String phone;
-    private Integer totalCost;
+public class Order extends AbstractOrder<OrderItem> {
+    private String orderId, name, address, phone;
+    private BigDecimal totalCost;
 
-    public Integer getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(Integer totalCost) {
+    public void setTotalCost(BigDecimal totalCost) {
         this.totalCost = totalCost;
     }
 
-    public Order(String id) {
-        this.id = id;
+    public BigDecimal getTotalCost() {
+        return totalCost;
     }
 
-    public String getName() {
-        return name;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getId() {
-        return id;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public List<OrderItem> getCartItems() {
-        return new ArrayList<>(orderItems);
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

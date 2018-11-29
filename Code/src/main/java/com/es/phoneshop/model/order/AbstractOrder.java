@@ -1,13 +1,30 @@
 package com.es.phoneshop.model.order;
 
-import java.io.Serializable;
+import com.es.phoneshop.model.cart.CartItem;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractOrder<T extends AbstractOrderItem> implements Serializable {
-    protected volatile List<T> orderItems = new ArrayList<>();
+public abstract class AbstractOrder<T extends AbstractOrderItem>   {
+    private List<T> cartItems;
 
-    public void setOrderItems(List<T> orderItems) {
-        this.orderItems = orderItems;
+    public AbstractOrder(List<T> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public void setCartItems(List<T> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public List<T> getCartItems() {
+        return cartItems;
+    }
+
+    public AbstractOrder() {
+        this.cartItems = new ArrayList<>();
+    }
+
+    public void clear() {
+        cartItems.clear();
     }
 }

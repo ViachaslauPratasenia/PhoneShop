@@ -3,94 +3,105 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-  <display-name>Phoneshop servlet api training</display-name>
-  
-  <listener>
-    <listener-class>com.es.phoneshop.web.SampleDataServletContextListener</listener-class>
-  </listener>
 
-  <context-param>
-    <param-name>addSampleData</param-name>
-    <param-value>true</param-value>
-  </context-param>
+    <display-name>Phoneshop servlet api training</display-name>
 
-  <servlet>
-    <servlet-name>productList</servlet-name>
-    <servlet-class>com.es.phoneshop.web.ProductListServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>productList</servlet-name>
-    <url-pattern>/products</url-pattern>
-  </servlet-mapping>
+    <context-param>
+        <param-name>init</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
-  <servlet>
-    <servlet-name>product</servlet-name>
-    <servlet-class>com.es.phoneshop.web.ProductDetailsPageServlet</servlet-class>
-  </servlet>
+    <listener>
+        <listener-class>
+            com.es.phoneshop.web.listener.SampleDataServletContextListener
+        </listener-class>
+    </listener>
 
-  <servlet-mapping>
-    <servlet-name>product</servlet-name>
-    <url-pattern>/products/*</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>productList</servlet-name>
+        <servlet-class>com.es.phoneshop.web.servlet.ProductListServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>Cart</servlet-name>
-    <servlet-class>com.es.phoneshop.web.CartPageServlet</servlet-class>
-  </servlet>
+    <servlet-mapping>
+        <servlet-name>productList</servlet-name>
+        <url-pattern>/products</url-pattern>
+    </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Cart</servlet-name>
-    <url-pattern>/cart</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>product</servlet-name>
+        <servlet-class>com.es.phoneshop.web.servlet.ProductDetailsPageServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>Checkout</servlet-name>
-    <servlet-class>com.es.phoneshop.web.CheckoutPageServlet</servlet-class>
-  </servlet>
+    <servlet-mapping>
+        <servlet-name>product</servlet-name>
+        <url-pattern>/products/product/*</url-pattern>
+    </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Checkout</servlet-name>
-    <url-pattern>/checkout</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>cart</servlet-name>
+        <servlet-class>com.es.phoneshop.web.servlet.CartPageServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>OverviewPage</servlet-name>
-    <servlet-class>com.es.phoneshop.web.OverviewPageServlet</servlet-class>
-  </servlet>
+    <servlet-mapping>
+        <servlet-name>cart</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>OverviewPage</servlet-name>
-    <url-pattern>/checkout/*</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>checkout</servlet-name>
+        <servlet-class>com.es.phoneshop.web.servlet.CheckoutPageServlet</servlet-class>
+    </servlet>
 
-  <servlet>
-    <servlet-name>ComparePage</servlet-name>
-    <servlet-class>com.es.phoneshop.web.ComparePageServlet</servlet-class>
-  </servlet>
+    <servlet-mapping>
+        <servlet-name>checkout</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>ComparePage</servlet-name>
-    <url-pattern>/compare</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>orderOverview</servlet-name>
+        <servlet-class>com.es.phoneshop.web.servlet.OrderOverviewPageServlet</servlet-class>
+    </servlet>
 
-  <filter>
-    <filter-name>DosFilter</filter-name>
-    <filter-class>com.es.phoneshop.web.filters.DosFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>DosFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
+    <servlet-mapping>
+        <servlet-name>orderOverview</servlet-name>
+        <url-pattern>/orderOverview/*</url-pattern>
+    </servlet-mapping>
 
-  <error-page>
-    <error-code>404</error-code>
-    <location>/WEB-INF/pages/errorPage404.jsp</location>
-  </error-page>
+    <filter>
+        <filter-name>dosFilter</filter-name>
+        <filter-class>com.es.phoneshop.web.filter.DosFilter</filter-class>
+        <init-param>
+            <param-name>timerInterval</param-name>
+            <param-value>10000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>errorTimerInterval</param-name>
+            <param-value>15000</param-value>
+        </init-param>
+        <init-param>
+            <param-name>maxRequestCount</param-name>
+            <param-value>20</param-value>
+        </init-param>
+    </filter>
 
-  <error-page>
-    <error-code>500</error-code>
-    <location>/WEB-INF/pages/errorPage500.jsp</location>
-  </error-page>
+    <filter-mapping>
+        <filter-name>dosFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/pages/error/Error404.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/pages/error/Error500.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>429</error-code>
+        <location>/WEB-INF/pages/error/Error429.jsp</location>
+    </error-page>
 
 </web-app>
