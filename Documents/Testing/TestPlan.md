@@ -73,4 +73,4 @@
 
 <a name="7"></a>
 ### 7. Выводы
-Приведенный выше тестовый план позволяет проверить, отвечает ли приложение требованиям, описанным в [SRS.md](https://github.com/ViachaslauPratasenia/PhoneShop/blob/master/Documents/Requirements/Requirements.md). При выполнении всех аспектов тестирования можно утверждать, что приложение сконструировано корректно.
+Приведенный выше тестовый план позволяет проверить, отвечает ли приложение требованиям, описанным в [Requirements.md](https://github.com/ViachaslauPratasenia/PhoneShop/blob/master/Documents/Requirements/Requirements.md). При выполнении всех аспектов тестирования можно утверждать, что приложение сконструировано корректно.
